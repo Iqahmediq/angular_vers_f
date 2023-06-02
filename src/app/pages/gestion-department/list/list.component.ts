@@ -7,9 +7,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./list.component.css']
 })
 
-
-
-
 export class ListComponent implements OnInit {
   departments: any[] = [];
     selectedDepartment: any;
@@ -27,11 +24,7 @@ export class ListComponent implements OnInit {
       departmentName: ['', Validators.required]
     });
   }
-  onUpdate(department: any) {
-    this.selectedDepartment = department;
-    this.form.controls['departmentName'].setValue(this.selectedDepartment.departmentName);
-    this.showUpdateForm = true;
-  }
+
   
 loadListDepartments(): void {
   this.depService.getListDepartments().subscribe(data=>{
@@ -50,20 +43,7 @@ onSubmit(): void {
       });
   
 }
-onUpdateSubmit() {
-  const department = { id: this.selectedDepartment.id, departmentName: this.form.value.departmentName };
-  this.depService.updateDepartment(department).subscribe(() => {
-    this.showUpdateForm = false;
-        this.depService.getListDepartments().subscribe((data) => {
-      this.departments = data;  });
-  });
-}
-editDepartment(department: any): void {
-  this.selectedDepartment = department;
-  this.form.setValue({
-    id: department.id,
-    departmentName: department.departmentName
-  });
-}
+
+
 
 }
